@@ -14,7 +14,8 @@ async  fn main() -> anyhow::Result<()> {
 
     let url = env::var("DB_URL")?;
     let mongo = Client::with_uri_str(url).await?;
-    let db = mongo.database("hololive");
+    let db_name = env::var("DB_NAME")?;
+    let db = mongo.database(&db_name);
     let collection = db.collection::<Song>("original_musics");
 
     let b = fs::read(SOURCE)?;
